@@ -1,10 +1,7 @@
-package Model;
+package com.example.seniorfullstackdyhtwb.Model;
 
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.*;
 
 @Entity
@@ -12,7 +9,7 @@ import lombok.*;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@RequiredArgsConstructor
+
 public class GameSession {
 
     @Id
@@ -20,6 +17,12 @@ public class GameSession {
     private Long id;
 
     private int credits;
+
+    @ManyToOne
+    @JoinColumn(name = "user_account_id")
+     UserAccount userAccount;
+
+
 
 
 }

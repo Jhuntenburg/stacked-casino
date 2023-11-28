@@ -1,4 +1,4 @@
-package Model;
+package com.example.seniorfullstackdyhtwb.Model;
 
 import jakarta.persistence.*;
 import lombok.*;
@@ -10,7 +10,7 @@ import java.util.Date;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@RequiredArgsConstructor
+
 public class Roll {
 
     @Id
@@ -22,6 +22,8 @@ public class Roll {
 
     private String result; // The result of the roll (cherry, lemon, etc.)
 
+    @Temporal(TemporalType.TIMESTAMP)
     private Date timestamp; // Timestamp of when the roll occurred
-
 }
+
+
