@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 public class GameController {
 
     private final GameSessionService gameSessionService;
+    GameSession gameSession;
 
     @Autowired
     public GameController(GameSessionService gameSessionService) {
@@ -25,13 +26,17 @@ public class GameController {
         GameSession newGameSession = gameSessionService.startNewGameSession();
         return new ResponseEntity<>(newGameSession, HttpStatus.OK);
 
-//                newGameSession.map(session -> ResponseEntity.ok().body(session))
-//                .orElseGet(() -> ResponseEntity.badRequest().build());
     }
+
+    @PostMapping("/results/{userCredits}")
+    public ResponseEntity<String[]> rollResultsAgain(@PathVariable int userCredits){
+        return new ResponseEntity<>(gameSessionService.simulateRollAgain(userCredits), HttpStatus.OK);
+    }
+
 
     @PostMapping("/results")
     public ResponseEntity<String[]> rollResults(){
-       return new ResponseEntity<>( gameSessionService.simulateRoll(), HttpStatus.OK);
+        return new ResponseEntity<>( gameSessionService.simulateRoll(), HttpStatus.OK);
     }
 
     @PostMapping("/roll/{gameSessionId}")

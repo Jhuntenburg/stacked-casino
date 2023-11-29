@@ -1,0 +1,62 @@
+body {
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: black;
+}
+
+#game-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    height: 100vh;
+}
+
+#slot-machine {
+    display: flex;
+    justify-content: space-around;
+    width: 100%;
+    height: 60vh;
+    margin-top: 20px;
+}
+
+.slot {
+    width: 100px; /* Adjust as needed */
+    height: 100px; /* Adjust as needed */
+    background-color: #f0f0f0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    border: 1px solid #ccc;
+}
+
+#credits{
+    font-size: 18px;
+    color: white;
+
+}
+
+button {
+    font-size: 18px;
+    padding: 10px 20px;
+    margin: 10px;
+    cursor: pointer;
+    background-color: #4caf50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+}
+
+#start-btn {
+    background-color: #2196F3;
+}
+
+#again {
+    background-color: #fdd835; /* Yellow */
+}
+
+#cash-out-btn {
+    background-color: #d32f2f; /* Red */
+}

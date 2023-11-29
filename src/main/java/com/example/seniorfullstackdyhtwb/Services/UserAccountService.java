@@ -26,10 +26,10 @@ public class UserAccountService {
         Optional<UserAccount> optionalUserAccount = userAccountRepository.findById(userId);
 
         optionalUserAccount.ifPresent(userAccount -> {
-            // Update user's totalCredits
+
             userAccount.setTotalCredits(userAccount.getTotalCredits() + credits);
 
-            // Save the updated user account
+
             userAccountRepository.save(userAccount);
         });
     }

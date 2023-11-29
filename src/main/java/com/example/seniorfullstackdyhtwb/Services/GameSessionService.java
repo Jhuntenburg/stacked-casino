@@ -22,6 +22,10 @@ public class GameSessionService {
         this.userAccountService = userAccountService;
     }
 
+    public GameSessionService() {
+
+    }
+
     public GameSession startNewGameSession() {
         // Initialize a new game session with 10 credits
         GameSession newGameSession = new GameSession();
@@ -42,47 +46,83 @@ public class GameSessionService {
         GameSession gameSession = getGameSessionById(gameSessionId);
 
 
-            // Deduct 1 credit for the roll
-            gameSession.setCredits(gameSession.getCredits() - 1);
+        // Deduct 1 credit for the roll
+        gameSession.setCredits(gameSession.getCredits() - 1);
 
-            // Simulate rolling the slots and determine the result
-            String[] result = results;
+        // Simulate rolling the slots and determine the result
+        String[] result = results;
 
-            // Update credits based on the result
-            int reward = calculateReward(result);
-            gameSession.setCredits(gameSession.getCredits() + reward);
+        // Update credits based on the result
+        int reward = calculateReward(result);
+        gameSession.setCredits(gameSession.getCredits() + reward);
 
-            // Save the updated game session
-            gameSessionRepository.save(gameSession);
+        // Save the updated game session
+        gameSessionRepository.save(gameSession);
 
-            return gameSession;
-        }
+        return gameSession;
+    }
 
 
     public String[] simulateRoll() {
-        // Define the symbols on the slot machine
+        // symbols on the slot machine
         String[] symbols = {"cherry", "lemon", "orange", "watermelon"};
         String[] rolls = new String[3];
 
 
-
-        // Use a random number to determine the symbol
         Random random = new Random();
         rolls[0] = symbols[random.nextInt(4)];
         rolls[1] = symbols[random.nextInt(4)];
         rolls[2] = symbols[random.nextInt(4)];
 
 
+        return rolls;
 
-                return rolls;
+    }
 
+    public String[] simulateRollAgain(int userCredits) {
+        // symbols on the slot machine
+        String[] symbols = {"cherry", "lemon", "orange", "watermelon"};
+        String[] rolls = new String[3];
+
+
+        Random random = new Random();
+
+        // Check the user's credits and adjust the logic accordingly
+        if (userCredits < 40) {
+
+            rolls[0] = symbols[random.nextInt(4)];
+            rolls[1] = symbols[random.nextInt(4)];
+            rolls[2] = symbols[random.nextInt(4)];
+        } else if (userCredits >= 40 && userCredits <= 60) {
+            //  30% chance of re-rolling
+            if (random.nextInt(100) < 30) {
+                rolls[0] = symbols[random.nextInt(4)];
+                rolls[1] = symbols[random.nextInt(4)];
+                rolls[2] = symbols[random.nextInt(4)];
+            } else {
+                rolls[0] = symbols[random.nextInt(4)];
+                rolls[1] = symbols[random.nextInt(4)];
+                rolls[2] = symbols[random.nextInt(4)];
+            }
+        } else {
+            // 60% chance of re-rolling
+            if (random.nextInt(100) < 60) {
+                rolls[0] = symbols[random.nextInt(4)];
+                rolls[1] = symbols[random.nextInt(4)];
+                rolls[2] = symbols[random.nextInt(4)];
+            } else {
+                rolls[0] = symbols[random.nextInt(4)];
+                rolls[1] = symbols[random.nextInt(4)];
+                rolls[2] = symbols[random.nextInt(4)];
+            }
         }
 
+        return rolls;
+    }
 
 
-
-    private int calculateReward(String[] result) {
-        if(result[0] == result[1] && result[0] == result[2]) {
+    public int calculateReward(String[] result) {
+        if (result[0] == result[1] && result[0] == result[2]) {
             switch (result[0]) {
                 case "cherry":
                     return 10;
@@ -100,25 +140,24 @@ public class GameSessionService {
     }
 
     public void cashOut(Long gameSessionId) {
-        // Retrieve the game session
+
         Optional<GameSession> optionalGameSession = gameSessionRepository.findById(gameSessionId);
 
         if (optionalGameSession.isPresent()) {
             GameSession gameSession = optionalGameSession.get();
 
-            // Retrieve the associated user account
+
             UserAccount userAccount = gameSession.getUserAccount();
 
             if (userAccount != null) {
-                // Move credits from the game session to the user's account
+
                 userAccountService.addCreditsToUser(userAccount.getId(), gameSession.getCredits());
 
-                // Close the game session only if adding credits is successful
+
                 gameSessionRepository.delete(gameSession);
             }
         }
     }
-
 
 
 }
