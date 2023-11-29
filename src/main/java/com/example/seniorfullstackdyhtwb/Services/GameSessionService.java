@@ -113,48 +113,7 @@ public class GameSessionService {
 
         return rolls;
     }
-//    public String[] simulateRollAgain(int userCredits) {
-//        // symbols on the slot machine
-////        String[] symbols = {"cherry", "lemon", "orange", "watermelon"};
-//        String[] rolls = new String[3];
-////
-////
-//       Random random = new Random();
-//
-//        // Check the user's credits and adjust the logic accordingly
-//        if (userCredits < 40) {
-////
-////            rolls[0] = symbols[random.nextInt(4)];
-////            rolls[1] = symbols[random.nextInt(4)];
-////            rolls[2] = symbols[random.nextInt(4)];
-//            rolls = simulateRoll();
-//        } else if (userCredits >= 40 && userCredits <= 60) {
-//            rolls = simulateRoll();
-//            //  30% chance of re-rolling
-//            if (isWin(rolls) && random.nextInt(100) < 30) {
-//                rolls[0] = symbols[random.nextInt(4)];
-//                rolls[1] = symbols[random.nextInt(4)];
-//                rolls[2] = symbols[random.nextInt(4)];
-//            } else {
-//                rolls[0] = symbols[random.nextInt(4)];
-//                rolls[1] = symbols[random.nextInt(4)];
-//                rolls[2] = symbols[random.nextInt(4)];
-//            }
-//        } else {
-//            // 60% chance of re-rolling
-//            if (random.nextInt(100) < 60) {
-//                rolls[0] = symbols[random.nextInt(4)];
-//                rolls[1] = symbols[random.nextInt(4)];
-//                rolls[2] = symbols[random.nextInt(4)];
-//            } else {
-//                rolls[0] = symbols[random.nextInt(4)];
-//                rolls[1] = symbols[random.nextInt(4)];
-//                rolls[2] = symbols[random.nextInt(4)];
-//            }
-//        }
-//
-//        return rolls;
-//    }
+
 
 
     public int calculateReward(String[] result) {
