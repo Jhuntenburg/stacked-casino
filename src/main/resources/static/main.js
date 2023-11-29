@@ -174,7 +174,6 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 
     // Other functions...
-
     async function simulateRoll() {
 
         slots.forEach(slot => {
@@ -192,7 +191,7 @@ document.addEventListener('DOMContentLoaded', function () {
         console.log(result1);
     }
 
-    // Function to update the credits display
+
     function updateCredits(credits) {
         const creditsDisplay = document.getElementById('credits');
         creditsDisplay.textContent = `Credits: ${credits}`;
