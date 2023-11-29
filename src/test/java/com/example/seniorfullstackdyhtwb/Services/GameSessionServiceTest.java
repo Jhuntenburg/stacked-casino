@@ -27,5 +27,31 @@ class GameSessionServiceTest {
 
 
     }
+    @Test
+    void testIsWinWhenAllElementsAreEqual() {
+        // Arrange
+        GameSessionService gameSessionService = new GameSessionService();
+        String[] winningRoll = {"cherry", "cherry", "cherry"};
+
+        // Act
+        boolean result = gameSessionService.isWin(winningRoll);
+
+        // Assert
+        assertTrue(result, "Expected a win for a roll where all elements are equal");
+    }
+
+    @Test
+    void testIsWinWhenAllElementsNotEqual() {
+        // Arrange
+        GameSessionService gameSessionService = new GameSessionService();
+        String[] winningRoll = {"cherry", "lemon", "cherry"};
+
+        // Act
+        boolean result = gameSessionService.isWin(winningRoll);
+
+        // Assert
+        assertFalse(result, "Expected a loss for a roll where all elements are equal");
+    }
+
 
 }

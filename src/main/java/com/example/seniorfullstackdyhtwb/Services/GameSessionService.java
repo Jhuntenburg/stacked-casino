@@ -7,6 +7,7 @@ import com.example.seniorfullstackdyhtwb.Repositories.GameSessionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Objects;
 import java.util.Optional;
 import java.util.Random;
 
@@ -50,10 +51,10 @@ public class GameSessionService {
         gameSession.setCredits(gameSession.getCredits() - 1);
 
         // Simulate rolling the slots and determine the result
-        String[] result = results;
+//        String[] result = results;
 
         // Update credits based on the result
-        int reward = calculateReward(result);
+        int reward = calculateReward(results);
         gameSession.setCredits(gameSession.getCredits() + reward);
 
         // Save the updated game session
@@ -79,46 +80,81 @@ public class GameSessionService {
 
     }
 
-    public String[] simulateRollAgain(int userCredits) {
-        // symbols on the slot machine
-        String[] symbols = {"cherry", "lemon", "orange", "watermelon"};
-        String[] rolls = new String[3];
+    public boolean isWin(String[] roll) {
+        boolean win;
+        if (Objects.equals(roll[0], roll[1]) && Objects.equals(roll[0], roll[2])) {
+            return win = true;
+        }
+        return win = false;
+    }
 
+    public String[] simulateRollAgain(int userCredits) {
+
+        String[] rolls = new String[3];
 
         Random random = new Random();
 
         // Check the user's credits and adjust the logic accordingly
         if (userCredits < 40) {
 
-            rolls[0] = symbols[random.nextInt(4)];
-            rolls[1] = symbols[random.nextInt(4)];
-            rolls[2] = symbols[random.nextInt(4)];
+            rolls = simulateRoll();
         } else if (userCredits >= 40 && userCredits <= 60) {
+            rolls = simulateRoll();
             //  30% chance of re-rolling
-            if (random.nextInt(100) < 30) {
-                rolls[0] = symbols[random.nextInt(4)];
-                rolls[1] = symbols[random.nextInt(4)];
-                rolls[2] = symbols[random.nextInt(4)];
-            } else {
-                rolls[0] = symbols[random.nextInt(4)];
-                rolls[1] = symbols[random.nextInt(4)];
-                rolls[2] = symbols[random.nextInt(4)];
+            if (isWin(rolls) && random.nextInt(100) < 30) {
+                rolls = simulateRoll();
             }
-        } else {
-            // 60% chance of re-rolling
-            if (random.nextInt(100) < 60) {
-                rolls[0] = symbols[random.nextInt(4)];
-                rolls[1] = symbols[random.nextInt(4)];
-                rolls[2] = symbols[random.nextInt(4)];
-            } else {
-                rolls[0] = symbols[random.nextInt(4)];
-                rolls[1] = symbols[random.nextInt(4)];
-                rolls[2] = symbols[random.nextInt(4)];
+        }  else
+            rolls = simulateRoll();
+            //  60% chance of re-rolling
+            if (isWin(rolls) && random.nextInt(100) < 60) {
+                rolls = simulateRoll();
             }
-        }
 
         return rolls;
     }
+//    public String[] simulateRollAgain(int userCredits) {
+//        // symbols on the slot machine
+////        String[] symbols = {"cherry", "lemon", "orange", "watermelon"};
+//        String[] rolls = new String[3];
+////
+////
+//       Random random = new Random();
+//
+//        // Check the user's credits and adjust the logic accordingly
+//        if (userCredits < 40) {
+////
+////            rolls[0] = symbols[random.nextInt(4)];
+////            rolls[1] = symbols[random.nextInt(4)];
+////            rolls[2] = symbols[random.nextInt(4)];
+//            rolls = simulateRoll();
+//        } else if (userCredits >= 40 && userCredits <= 60) {
+//            rolls = simulateRoll();
+//            //  30% chance of re-rolling
+//            if (isWin(rolls) && random.nextInt(100) < 30) {
+//                rolls[0] = symbols[random.nextInt(4)];
+//                rolls[1] = symbols[random.nextInt(4)];
+//                rolls[2] = symbols[random.nextInt(4)];
+//            } else {
+//                rolls[0] = symbols[random.nextInt(4)];
+//                rolls[1] = symbols[random.nextInt(4)];
+//                rolls[2] = symbols[random.nextInt(4)];
+//            }
+//        } else {
+//            // 60% chance of re-rolling
+//            if (random.nextInt(100) < 60) {
+//                rolls[0] = symbols[random.nextInt(4)];
+//                rolls[1] = symbols[random.nextInt(4)];
+//                rolls[2] = symbols[random.nextInt(4)];
+//            } else {
+//                rolls[0] = symbols[random.nextInt(4)];
+//                rolls[1] = symbols[random.nextInt(4)];
+//                rolls[2] = symbols[random.nextInt(4)];
+//            }
+//        }
+//
+//        return rolls;
+//    }
 
 
     public int calculateReward(String[] result) {
